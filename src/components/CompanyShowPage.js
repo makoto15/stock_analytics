@@ -35,7 +35,7 @@ export default class CompanyShowPage extends React.Component {
         <CompanyBasics />
         <div>
           <CompanyInfo data={this.state.companyInfo} />
-          <CompanyStatics />
+          <CompanyStatics data={this.state.companyInfo} />
         </div>
       </div>
     )
