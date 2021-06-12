@@ -23,6 +23,13 @@ module.exports = {
   devtool: 'eval-cheap-module-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'public'),
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000',
+        secure: false,
+        logLevel: 'debug'
+      }
+    },
     historyApiFallback: true
   }
 };
