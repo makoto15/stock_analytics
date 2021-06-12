@@ -1,12 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AppRouter from './routers/AppRouter'
 
-const App = () => {
-  return (
-    <div>
-      Hello react
-    </div>
-  )
-}
-
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<AppRouter />, document.getElementById('app'));
