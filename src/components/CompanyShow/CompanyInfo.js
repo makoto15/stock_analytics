@@ -7,7 +7,7 @@ const CompanyInfo = (props) => (
       <p>52週高値: {props.data.week52high}</p>
       <p>52週安値: {props.data.week52low}</p>
       <p>200日平均: {props.data.day200MovingAvg}</p>
-      <p>50日平均: {props.data.day50MovingAVG}</p>
+      <p>50日平均: {props.data.day50MovingAvg}</p>
       <p>出来高10日平均: {props.data.avg10Volume}</p>
       <p>出来高30日平均: {props.data.avg30Volume}</p>
     </div>
