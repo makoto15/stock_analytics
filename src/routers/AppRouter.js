@@ -8,11 +8,11 @@ import Header from '../components/Header';
 const AppRouter = () => (
   <BrowserRouter>
     <div>
-    <Header />
-    <Switch>
-      <Route path="/" component={StockDashboardPage} exact={true}/>
-      <Route component={NotFoundPage} />
-    </Switch>
+      <Header />
+      <Switch>
+        <Route path="/" component={StockDashboardPage} exact={true}/>
+        <Route component={NotFoundPage} />
+      </Switch>
     </div>
   </BrowserRouter>
 );
