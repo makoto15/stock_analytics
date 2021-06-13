@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev-server": "webpack serve",
-    "start": "node server/server.js"
+    "start": "npx nodemon server/server.js"
   },
   "dependencies": {
     "@babel/core": "^7.14.5",
@@ -24,6 +24,7 @@
     "log4js": "^6.3.0",
     "mongoose": "^5.12.13",
     "node-sass": "^6.0.0",
+    "nodemon": "^2.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",

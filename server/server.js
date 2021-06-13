@@ -5,6 +5,7 @@ const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3000;
 const symbolRouter = require('./routes/Symbol');
 const StockRouter = require('./routes/Stock');
+const SectorRouter = require('./routes/Sector');
 const { logger } = require('../server/logger');
 const mongoose = require('mongoose');
 
@@ -12,6 +13,7 @@ app.use(express.static(publicPath));
 
 app.use('/api/symbol', symbolRouter);
 app.use('/api/stock', StockRouter);
+app.use('/api/sector', SectorRouter);
 
 app.get('/api', (req, res) => {
   res.send({api: 'test'});
