@@ -22,6 +22,7 @@ router.get('/:symbol', (req, res) => {
                 'symbol',
                 'url',
                 'companyName',
+                'open',
                 'close',
                 'close_previousClose_diff',
                 'high',
