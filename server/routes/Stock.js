@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
 	)
 
     const Stocks = await Stock.find({});
-    console.log(Stocks)
     res.json(Stocks);
 })
 
