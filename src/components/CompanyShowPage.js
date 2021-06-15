@@ -31,8 +31,8 @@ export default class CompanyShowPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <CompanyBasics />
+      <div className="companyShowPage-body p-5">
+        <CompanyBasics data={this.state.companyInfo} />
         <div>
           <CompanyInfo data={this.state.companyInfo} />
           <CompanyStatics data={this.state.companyInfo} />

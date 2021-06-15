@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CompanyStatics = (props) => (
-  <div className="companyStatics-body">
+  <div className="companyStatics-body w-50 m-auto">
     <h3 className="companyStatics-title">Statics</h3>
     <div>
       <p>企業価値: {props.data.enterpriseValue}</p>
