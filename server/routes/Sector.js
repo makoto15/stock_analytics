@@ -11,7 +11,7 @@ router.use(express.json());
  */
 router.get('/', async (req, res) => {
     const Sectors = await Sector.find({});
-    res.json(JSON.stringify(finalResponse));
+    res.json(JSON.stringify(Sectors));
 })
 
 /**
