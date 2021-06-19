@@ -64,5 +64,24 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
     }
 })
 
+/**
+ * 企業ロゴをmongoDBへ格納する処理
+ */
+router.get('/recommends', async (req, res) => {
+  const sectors = await Sector.find({});
+  let finalResponse = []
+  for (let index = 0;index<sectors.length; index++) {
+    const responseData = {}
+    let stock = await Stock.findOne({"sector_id":sectors[index]['sector_id']});
+    if (stock) {
+      responseData['sector_name'] = sectors[index]['name_jp'];
+      responseData['logo_url'] = stock['logo_url'];
+      finalResponse.push(responseData)
+    }
+  };
+  res.json(JSON.stringify(finalResponse))
+})
+
+
 
 module.exports = router;
