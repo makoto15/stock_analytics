@@ -4,6 +4,7 @@ import StockDashboardPage from '../components/StockDashboardPage';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from '../components/Header';
 import CompanyShowPage from '../components/CompanyShowPage';
+import SectorIndexPage from '../components/SectorIndexPage';
 
 
 const AppRouter = () => (
@@ -13,6 +14,7 @@ const AppRouter = () => (
       <Switch>
         <Route path="/" component={StockDashboardPage} exact={true}/>
         <Route path="/symbol/:symbol" component={CompanyShowPage}/>
+        <Route path="/:sectorId/:sector" component={SectorIndexPage}/>
         <Route component={NotFoundPage} />
       </Switch>
     </div>
