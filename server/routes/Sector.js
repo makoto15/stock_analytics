@@ -31,12 +31,11 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
         try{
           await Promise.all([
             getStockData.getStockQuote(stockList[index]["symbol"]),
-            getStockData.getStockLogo(stockList[index]["symbol"]),
         ])
           .then(function (results) {
             //close(終値)とpreviousClose(前日終値)の差分を追加
               let addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
-              let quoteAndLogo = Object.assign(addedQuote, results[1])
+              let quoteAndLogo = Object.assign(addedQuote, {url :stockList[index]['logo_url']})
               const returnKeys = [
                 'symbol',
                 'url',
