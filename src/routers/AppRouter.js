@@ -12,7 +12,7 @@ const AppRouter = () => (
       <Header />
       <Switch>
         <Route path="/" component={StockDashboardPage} exact={true}/>
-        <Route path="/company/:symbol" component={CompanyShowPage}/>
+        <Route path="/symbol/:symbol" component={CompanyShowPage}/>
         <Route component={NotFoundPage} />
       </Switch>
     </div>
