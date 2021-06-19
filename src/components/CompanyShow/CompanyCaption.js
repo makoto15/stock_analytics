@@ -13,7 +13,7 @@ const CompanyCaption = (props) => (
         ティッカー: {props.sector.symbol}
       </p>
       <p>
-        <span className={props.sector.close_previousClose_diff>0 ? 'text-success' : 'text-danger'}>{props.sector.close_previousClose_diff}</span> (前日比)
+        <span className={props.sector.close_previousClose_diff>=0 ? 'text-success' : 'text-danger'}>{props.sector.close_previousClose_diff}</span> (前日比)
       </p>
     </div>
     
