@@ -28,7 +28,7 @@ export default class SectorIndexPage extends React.Component {
 
   render() {
     return (
-      <div className="sectorIndexPage-body p-5">
+      <div className="sectorIndexPage-body p-5 text-center">
         <h1> {this.state.sectorName} セクター米国株グロース銘柄10株</h1>
         {
           this.state.sectorList.map((sector) => {
