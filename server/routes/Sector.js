@@ -65,7 +65,7 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
 })
 
 /**
- * 企業ロゴをmongoDBへ格納する処理
+ * おすすめセクター一覧情報を返す
  */
 router.get('/recommends', async (req, res) => {
   const sectors = await Sector.find({});
