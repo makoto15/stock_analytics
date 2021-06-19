@@ -19,13 +19,14 @@ router.get('/', async (req, res) => {
  */
 router.get('/:sectorId/:sectorName', async (req, res) => {
     try {
+      let sectorInfo = await Sector.find({"sector_id":req.params.sectorId});
       let stockList = await Stock.find({"sector_id":req.params.sectorId}); 
       const stockNumInSector = stockList.length;
       if (stockNumInSector > 10) {
         stockList = stockList.slice(0, 10)
       }
 
-      let finalResponse = {}
+      let symbolsList = []
       for (let index = 0; index < stockList.length; index++) {
         try{
           await Promise.all([
@@ -46,12 +47,16 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
               for (let index = 0;index<returnKeys.length; index++) {
                 responseData[returnKeys[index]] = quoteAndLogo[returnKeys[index]]
               };
-              finalResponse[responseData["companyName"]] = responseData
+              symbolsList.push(responseData)
             })
         } catch(err) {
           res.status(400).send("error has occured in for block");
         }
 
+      }
+      const finalResponse = {
+        sector: sectorInfo[0]['name_jp'],
+        symbols: symbolsList
       }
       res.json(JSON.stringify(finalResponse))
     } catch(err) {
