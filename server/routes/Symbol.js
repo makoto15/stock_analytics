@@ -51,6 +51,31 @@ router.get('/:symbol', async (req, res) => {
         });
 })
 
+router.get('/basic-chart/:symbol/:range', async (req, res) => {
+    const symbol = req.params.symbol
+    const range = req.params.range
+    Promise.all([ 
+        getStockData.getSimpleChartData(symbol, range),
+    ])
+        .then(function (results) {
+            const date = [];
+            const dataContent = {}
+            for (let index = 0;index<results[0].length; index++) {
+                date.push(results[0][index]['date'])
+                dataContent[results[0][index]['date']] = results[0][index]
+                //dataContentで返す必要がない物を除く
+                delete results[0][index].date;
+                delete results[0][index].changeOverTime;
+            };
+            const finalResponse = {
+                label: date,
+                data: dataContent
+            }
+            res.json(JSON.stringify(finalResponse))
+        });
+})
+
+
 router.get('/test/:symbol', (req, res)=>{
     res.json({
         "symbol": "APPL",

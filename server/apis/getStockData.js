@@ -10,6 +10,15 @@ async function execStockApi(symbol, type){
     });
 }
 
+async function execSimpleChartApi(symbol, range) {
+    return new Promise(function (resolve, reject) {
+        axios
+            .get(process.env.IEX_API_SANDBOX_BASE_URL + 'stock/' + symbol + '/chart/' + range + '?chartCloseOnly=true&token=' + process.env.IEX_SANDBOX_SECRET_TOKEN)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error.response))
+    })
+}
+
 exports.getStockQuote = function(symbol){
     return execStockApi(symbol, "quote")
 }
@@ -24,4 +33,8 @@ exports.getStockStats = function(symbol) {
 
 exports.getStockAdvancedStats = function(symbol) {
     return execStockApi(symbol, 'advanced-stats')
+}
+
+exports.getSimpleChartData = function(symbol, range) {
+    return execSimpleChartApi(symbol, range)
 }
