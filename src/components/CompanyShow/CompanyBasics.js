@@ -3,8 +3,8 @@ import React from 'react';
 const CompanyBasics = (props) => (
   <div className="companyBasics-body w-50 m-auto mb-5">
     <h2>{props.data.symbol}- {props.data.companyName}</h2>
-    <div>
-      <img src={props.data.url} />
+    <div className="d-flex justify-content-around align-items-center">
+      <img src={props.data.url} className="rounded-circle"/>
       {props.data.close} (前日の終値)
     </div>
     <div>
