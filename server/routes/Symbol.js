@@ -9,7 +9,7 @@ router.use(express.json());
 
 router.get('/:symbol', async (req, res) => {
     //正規表現で小文字も許容する　ex)AAPL:aapl
-    let stock = await Stock.find({"symbol":new RegExp(String.raw`^${req.params.symbol}$`, "i")});
+    const stock = await Stock.find({"symbol":new RegExp(String.raw`^${req.params.symbol}$`, "i")});
     const symbol = req.params.symbol
     Promise.all([ 
         getStockData.getStockQuote(symbol),
@@ -17,9 +17,9 @@ router.get('/:symbol', async (req, res) => {
     ])
         .then(function (results) {
             //close(終値)とpreviousClose(前日終値)の差分を追加
-            let addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
-            let quoteAndLogo = Object.assign(addedQuote, {url : stock.length > 0 ? stock[0]['logo_url'] : undefined})
-            let allGetData = Object.assign(quoteAndLogo, results[1])
+            const addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
+            const quoteAndLogo = Object.assign(addedQuote, {url : stock.length > 0 ? stock[0]['logo_url'] : undefined})
+            const allGetData = Object.assign(quoteAndLogo, results[1])
             const returnKeys = [
                 'symbol',
                 'url',
