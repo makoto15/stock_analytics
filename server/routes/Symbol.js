@@ -1,23 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const getStockData = require('../apis/getStockData');
+const Stock = require('../models/Stock')
 // const { get } = require('config');
 // const { response } = require('express');
 
 router.use(express.json());
 
-router.get('/:symbol', (req, res) => {
+router.get('/:symbol', async (req, res) => {
+    //正規表現で小文字も許容する　ex)AAPL:aapl
+    let stock = await Stock.find({"symbol":new RegExp(String.raw`^${req.params.symbol}$`, "i")});
     const symbol = req.params.symbol
     Promise.all([ 
         getStockData.getStockQuote(symbol),
-        getStockData.getStockLogo(symbol),
         getStockData.getStockAdvancedStats(symbol)
     ])
         .then(function (results) {
             //close(終値)とpreviousClose(前日終値)の差分を追加
             let addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
-            let quoteAndLogo = Object.assign(addedQuote, results[1])
-            let allGetData = Object.assign(quoteAndLogo, results[2])
+            let quoteAndLogo = Object.assign(addedQuote, {url : stock.length > 0 ? stock[0]['logo_url'] : undefined})
+            let allGetData = Object.assign(quoteAndLogo, results[1])
             const returnKeys = [
                 'symbol',
                 'url',

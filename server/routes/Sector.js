@@ -31,12 +31,11 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
         try{
           await Promise.all([
             getStockData.getStockQuote(stockList[index]["symbol"]),
-            getStockData.getStockLogo(stockList[index]["symbol"]),
         ])
           .then(function (results) {
             //close(終値)とpreviousClose(前日終値)の差分を追加
               let addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
-              let quoteAndLogo = Object.assign(addedQuote, results[1])
+              let quoteAndLogo = Object.assign(addedQuote, {url :stockList[index]['logo_url']})
               const returnKeys = [
                 'symbol',
                 'url',
@@ -63,6 +62,25 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
       res.status(400).send("error has occured");
     }
 })
+
+/**
+ * おすすめセクター一覧情報を返す
+ */
+router.get('/recommends', async (req, res) => {
+  const sectors = await Sector.find({});
+  let finalResponse = []
+  for (let index = 0;index<sectors.length; index++) {
+    const responseData = {}
+    let stock = await Stock.findOne({"sector_id":sectors[index]['sector_id']});
+    if (stock) {
+      responseData['sector_name'] = sectors[index]['name_jp'];
+      responseData['logo_url'] = stock['logo_url'];
+      finalResponse.push(responseData)
+    }
+  };
+  res.json(JSON.stringify(finalResponse))
+})
+
 
 
 module.exports = router;
