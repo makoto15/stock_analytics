@@ -60,14 +60,13 @@ router.get('/basic-chart/:symbol/:range', async (req, res) => {
     })
         .then(function (results) {
             const date = [];
-            const dataContent = {}
+            let dataContent = []
             for (let index = 0;index<results.length; index++) {
                 date.push(results[index]['date'])
-                dataContent[results[index]['date']] = results[index]
-                //dataContentで返す必要がない物を除く
-                delete results[index].date;
+                //datacontentにいらないデータを除く
                 delete results[index].changeOverTime;
             };
+            dataContent = results
             const finalResponse = {
                 label: date,
                 data: dataContent
