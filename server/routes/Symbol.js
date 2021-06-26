@@ -9,7 +9,7 @@ router.use(express.json());
 
 router.get('/:symbol', async (req, res) => {
     //正規表現で小文字も許容する　ex)AAPL:aapl
-    let stock = await Stock.find({"symbol":new RegExp(String.raw`^${req.params.symbol}$`, "i")});
+    const stock = await Stock.find({"symbol":new RegExp(String.raw`^${req.params.symbol}$`, "i")});
     const symbol = req.params.symbol
     Promise.all([ 
         getStockData.getStockQuote(symbol),
@@ -17,9 +17,9 @@ router.get('/:symbol', async (req, res) => {
     ])
         .then(function (results) {
             //close(終値)とpreviousClose(前日終値)の差分を追加
-            let addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
-            let quoteAndLogo = Object.assign(addedQuote, {url : stock.length > 0 ? stock[0]['logo_url'] : undefined})
-            let allGetData = Object.assign(quoteAndLogo, results[1])
+            const addedQuote = Object.assign(results[0], {close_previousClose_diff :results[0]['close'] - results[0]['previousClose']})
+            const quoteAndLogo = Object.assign(addedQuote, {url : stock.length > 0 ? stock[0]['logo_url'] : undefined})
+            const allGetData = Object.assign(quoteAndLogo, results[1])
             const returnKeys = [
                 'symbol',
                 'url',
@@ -50,6 +50,33 @@ router.get('/:symbol', async (req, res) => {
             res.json(JSON.stringify(responseData))
         });
 })
+
+router.get('/basic-chart/:symbol/:range', async (req, res) => {
+    const symbol = req.params.symbol
+    const range = req.params.range
+
+    new Promise((resolve) => {
+        resolve(getStockData.getSimpleChartData(symbol, range))
+    })
+        .then(function (results) {
+            const date = [];
+            const dataContent = {}
+            for (let index = 0;index<results.length; index++) {
+                date.push(results[index]['date'])
+                dataContent[results[index]['date']] = results[index]
+                //dataContentで返す必要がない物を除く
+                delete results[index].date;
+                delete results[index].changeOverTime;
+            };
+            const finalResponse = {
+                label: date,
+                data: dataContent
+            }
+            res.json(JSON.stringify(finalResponse))
+        })
+        .catch(err => console.log(err));
+})
+
 
 router.get('/test/:symbol', (req, res)=>{
     res.json({
