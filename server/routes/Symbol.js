@@ -71,7 +71,6 @@ router.get('/basic-chart/:symbol/:range', async (req, res) => {
                 label: date,
                 data: dataContent
             }
-            console.log(finalResponse)
             res.json(JSON.stringify(finalResponse))
         })
         .catch(err => console.log(err));
