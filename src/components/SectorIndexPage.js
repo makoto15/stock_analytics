@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import CompanyCaption from './CompanyShow/CompanyCaption';
+import SectorAttention from './Sectors/SectorAttention';
 
 
 export default class SectorIndexPage extends React.Component {
@@ -30,6 +31,7 @@ export default class SectorIndexPage extends React.Component {
     return (
       <div className="sectorIndexPage-body p-5 text-center">
         <h1> {this.state.sectorName} セクター米国株グロース銘柄10株</h1>
+        <SectorAttention />
         {
           this.state.sectorList.map((sector) => {
             return <CompanyCaption sector={sector} key={sector.companyName} />
