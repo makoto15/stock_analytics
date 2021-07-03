@@ -74,7 +74,11 @@ router.get('/recommends', async (req, res) => {
     let stock = await Stock.findOne({"sector_id":sectors[index]['sector_id']});
     if (stock) {
       responseData['sector_name'] = sectors[index]['name_jp'];
+      //ゼロパディングする
+      responseData['sector_id'] = String(sectors[index]['sector_id']).padStart(4, '0');
       responseData['logo_url'] = stock['logo_url'];
+      //正規表現で空白を詰める
+      responseData['name_en'] = sectors[index]['name_en'].replace(/\s+/g, "");
       finalResponse.push(responseData)
     }
   };

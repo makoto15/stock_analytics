@@ -18,6 +18,10 @@ export default class SectorIndexPage extends React.Component {
     this.getSectorInfo();
   }
 
+  componentDidUpdate() {
+    this.getSectorInfo();
+  }
+
   async getSectorInfo() {
     const res = await axios.get(`/api/sector/${this.props.match.params.sectorId}/${this.props.match.params.sector}`);
     const companyInfo = JSON.parse(res.data);
