@@ -18,8 +18,10 @@ export default class SectorIndexPage extends React.Component {
     this.getSectorInfo();
   }
 
-  componentDidUpdate() {
-    this.getSectorInfo();
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.sectorId !== prevProps.match.params.sectorId) {
+      this.getSectorInfo();
+    }
   }
 
   async getSectorInfo() {
