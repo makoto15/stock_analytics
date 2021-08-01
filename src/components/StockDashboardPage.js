@@ -1,8 +1,9 @@
 import React from 'react';
+import SectorRankingSymbols from './Top/SectorRankingSymbols';
 
 const StockDashboardPage = () => (
   <div>
-    This is StockDashboardPage.
+    <SectorRankingSymbols />
   </div>
 );
 

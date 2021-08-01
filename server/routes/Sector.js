@@ -64,6 +64,34 @@ router.get('/:sectorId/:sectorName', async (req, res) => {
 })
 
 /**
+ * セクター別人気ランキングAPI numパラメータによって返却する個数を変更可
+ */
+router.get('/symbol/ranking/:num', async (req, res) => {
+  const sectors = await Sector.find({});
+  let finalResponse = []
+  for (let index = 0;index<sectors.length; index++) {
+    let stockList = await Stock.find({"sector_id":sectors[index]['sector_id']},{_id:0, sector_id:0});
+    const stockNumInSector = stockList.length;
+    if (!stockNumInSector) {
+      continue;
+    }
+    if (stockNumInSector > req.params.num) {
+      stockList = stockList.slice(0, req.params.num)
+    }
+    
+    const responseData = {
+      sector_name: sectors[index]['name_jp'],
+      sector_id: sectors[index]['sector_id'],
+      name_en: sectors[index]['name_en'],
+      symbols: stockList
+    }
+    finalResponse.push(responseData)
+  };
+  res.json(JSON.stringify(finalResponse))
+})
+
+
+/**
  * おすすめセクター一覧情報を返す
  */
 router.get('/recommends', async (req, res) => {
